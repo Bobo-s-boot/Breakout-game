@@ -16,6 +16,7 @@ let paddleX = (canvas.width - paddleWidth) / 2;
 // --- Керування клавіатурою ---
 let rightPressed = false;
 let leftPressed = false;
+let gameStarted = false;
 
 // --- Параметри цеглин (Bricks) ---
 const brickRowCount = 3;
@@ -46,8 +47,10 @@ document.addEventListener("keyup", keyUpHandler, false);
 function keyDownHandler(e) {
   if (e.key === "Right" || e.key === "ArrowRight") {
     rightPressed = true;
+    if (!gameStarted) gameStarted = true;
   } else if (e.key === "Left" || e.key === "ArrowLeft") {
     leftPressed = true;
+    if (!gameStarted) gameStarted = true;
   }
 }
 
@@ -96,6 +99,7 @@ function drawBricks() {
 function drawScore() {
   ctx.font = "16px Arial";
   ctx.fillStyle = "#0095DD";
+  ctx.textAlign = "left";
   ctx.fillText("Score: " + score, 8, 20);
 }
 
@@ -130,6 +134,11 @@ function collisionDetection() {
 }
 
 function draw() {
+  if (!gameStarted) {
+    x = paddleX + paddleWidth / 2;
+    y = canvas.height - paddleHeight - ballRadius;
+  }
+
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   drawBricks();
@@ -174,11 +183,10 @@ function draw() {
         paddleX = (canvas.width - paddleWidth) / 2;
 
         // Гарантуємо, що м'яч полетить вгору (dy має бути від'ємним)
-        //
+
         if (dy > 0) {
           dy = -dy;
         }
-        // dx залишається тим самим (швидким)
       }
     }
   }
@@ -189,10 +197,23 @@ function draw() {
     paddleX -= 7;
   }
 
-  x += dx;
-  y += dy;
+  if (gameStarted) {
+    x += dx;
+    y += dy;
+  }
 
   requestAnimationFrame(draw);
+
+  if (!gameStarted) {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.textAlign = "center";
+    ctx.fillText(
+      "Натисніть ← або → щоб почати",
+      canvas.width / 2,
+      canvas.height / 2
+    );
+  }
 }
 
 draw();
