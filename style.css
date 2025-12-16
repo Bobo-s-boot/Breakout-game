@@ -1,0 +1,16 @@
+body {
+  background-color: #222;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+canvas {
+  background: #94c1a4ff;
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #dde3e7ff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
