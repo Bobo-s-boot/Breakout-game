@@ -16,6 +16,8 @@ let paddleX = (canvas.width - paddleWidth) / 2;
 // --- Керування клавіатурою ---
 let rightPressed = false;
 let leftPressed = false;
+
+// --- Стан гри ---
 let gameStarted = false;
 
 // --- Параметри цеглин (Bricks) ---
@@ -40,7 +42,7 @@ for (let c = 0; c < brickColumnCount; c++) {
   }
 }
 
-// Слухачі подій
+// Слухачі подій і управління клавіатурою
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
@@ -177,7 +179,7 @@ function draw() {
         document.location.reload();
       } else {
         // === УМОВА 2: ЗБЕРЕЖЕННЯ ШВИДКОСТІ ===
-        // Скидаємо лише координати, НЕ швидкість
+        // Скидаємо координати м'яча і ракетки, але зберігаємо швидкість
         x = canvas.width / 2;
         y = canvas.height - 30;
         paddleX = (canvas.width - paddleWidth) / 2;
